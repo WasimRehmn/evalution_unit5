@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { store_data } from "../Redux/action";
 
 export const Login = () => {
-    const [profile, setProfile] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -37,11 +36,11 @@ export const Login = () => {
                 }
             );
             let data = await res.json();
+
             getDetails(loginData.username, data.token);
-            dispatch(store_data(profile));
-            navigate("/");
         } catch (err) {
             console.log(err);
+            navigate("/register");
         }
     };
 
@@ -58,7 +57,9 @@ export const Login = () => {
             );
 
             let data = await res.json();
-            setProfile(data);
+            dispatch(store_data(data));
+            console.log(data);
+            navigate("/");
             // pass(profile);
         } catch (err) {
             console.log(err);
